@@ -1,0 +1,25 @@
+﻿using NHibernate.Mapping.ByCode.Conformist;
+using PSI.Inventory;
+
+namespace PSI.NHibernate.Mappings
+{
+    /// <summary>
+    /// 物料主数据映射配置
+    /// </summary>
+    internal class ItemsMapping : ClassMapping<Items>
+    {
+        public ItemsMapping()
+        {
+            Table("Items");
+            Id(item => item.ItemCode, id =>
+            {
+                id.Length(20);
+            });
+            Property(item => item.ItemName, p =>
+            {
+                p.Length(100);
+                p.NotNullable(true);
+            });
+        }
+    }
+}
