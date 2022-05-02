@@ -7,6 +7,7 @@ using NHibernate.Cfg.Loquacious;
 using NHibernate.Driver;
 using NHibernate.Dialect;
 using NHibernate.Connection;
+using PSI.Data;
 
 namespace PSI.NHibernate
 {
@@ -20,11 +21,11 @@ namespace PSI.NHibernate
         /// </summary>
         /// <param name="services">ServiceCollection</param>
         /// <param name="dbConfig">NHibernate 数据库配置</param>
-        public static void AddNHibernate(this IServiceCollection services, Action<DbIntegrationConfigurationProperties> dbConfig)
+        public static void AddNHibernate(this IServiceCollection services, Action<DbIntegrationConfigurationProperties> db)
         {
             services.AddSingleton<ISessionFactory>((servicProvider) =>
             {
-                return GetConfiguration(dbConfig).BuildSessionFactory();
+                return GetConfiguration(db).BuildSessionFactory();
             });
 
             services.AddScoped<ISession>((servicProvider) =>
@@ -33,25 +34,24 @@ namespace PSI.NHibernate
 
                 return factory.OpenSession();
             });
+
+            services.AddScoped<IDbSession, DbSession>();
         }
 
         /// <summary>
-        /// SQLite NHibernate
+        /// 使用 Sqlite 数据库
         /// </summary>
-        /// <param name="services">ServiceCollection</param>
-        /// <param name="connectionString">数据库连接字符串</param>
-        public static void AddNHibernateSQLite(this IServiceCollection services, string connectionString)
+        /// <param name="db">DbIntegrationConfigurationProperties</param>
+        /// <param name="connectionString">连接字符串</param>
+        public static void UseSqlite(this DbIntegrationConfigurationProperties db, string connectionString)
         {
-            services.AddNHibernate(db =>
-            {
-                db.ConnectionProvider<DriverConnectionProvider>();
-                db.Driver<SQLite20Driver>();
-                db.Dialect<SQLiteDialect>();
-                db.ConnectionString = connectionString;
+            db.ConnectionProvider<DriverConnectionProvider>();
+            db.Driver<SQLite20Driver>();
+            db.Dialect<SQLiteDialect>();
+            db.ConnectionString = connectionString;
 #if DEBUG
-                db.LogSqlInConsole = true;
+            db.LogSqlInConsole = true;
 #endif
-            });
         }
 
         /// <summary>
@@ -79,6 +79,7 @@ namespace PSI.NHibernate
             Type[] types = typeof(NHibernateExtensions).Assembly.GetTypes()
                        .Where(t => t.IsClass && typeof(IConformistHoldersProvider).IsAssignableFrom(t))
                        .ToArray();
+
             var modelMapper = new ModelMapper();
 
             modelMapper.AddMappings(types);

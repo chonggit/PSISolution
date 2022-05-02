@@ -11,7 +11,7 @@ using PSI.Inventory;
 namespace PSI.NHibernate.Test
 {
     [TestClass]
-    public class ExtensionsTests
+    public class NHibernateExtensionsTests
     {
         private const string CONNECTION_STRING = "Data Source=PSISolution.db";
 
@@ -36,13 +36,16 @@ namespace PSI.NHibernate.Test
         /// NHibernate SQLite
         /// </summary>
         [TestMethod]
-        public void AddNHibernateSQLiteToServiceCollectionTest()
+        public void AddNHibernateTest()
         {
             CreateSchema();
 
             var services = new ServiceCollection();
 
-            services.AddNHibernateSQLite(CONNECTION_STRING);
+            services.AddNHibernate(db =>
+            {
+                db.UseSqlite(CONNECTION_STRING);
+            });
 
             ServiceProvider serviceProvider = services.BuildServiceProvider();
 
