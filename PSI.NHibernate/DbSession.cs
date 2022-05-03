@@ -14,30 +14,6 @@ namespace PSI.NHibernate
 
         protected virtual ISession Session => _session;
 
-        public TEntity Add<TEntity>(TEntity entity) where TEntity : class
-        {
-            return (TEntity)Session.Save(entity);
-        }
-
-        public TEntity? Find<TEntity>(object key) where TEntity : class
-        {
-            return Session.Get<TEntity>(key);
-        }
-
-        public TEntity Remove<TEntity>(TEntity entity) where TEntity : class
-        {
-            Session.Delete(entity);
-
-            return entity;
-        }
-
-        public TEntity Update<TEntity>(TEntity entity) where TEntity : class
-        {
-            Session.Update(entity);
-
-            return entity;
-        }
-
         #region IDisposable
 
         private bool disposedValue;
@@ -72,5 +48,74 @@ namespace PSI.NHibernate
         }
 
         #endregion
+
+        public TEntity Add<TEntity>(TEntity entity) where TEntity : class
+        {
+            return (TEntity)Session.Save(entity);
+        }
+
+        public TEntity Find<TEntity>(object key) where TEntity : class
+        {
+            return Session.Get<TEntity>(key);
+        }
+
+        public TEntity Remove<TEntity>(TEntity entity) where TEntity : class
+        {
+            Session.Delete(entity);
+
+            return entity;
+        }
+
+        public TEntity Update<TEntity>(TEntity entity) where TEntity : class
+        {
+            Session.Update(entity);
+
+            return entity;
+        }
+
+        public Task<TEntity> AddAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default) where TEntity : class
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<TEntity> RemoveAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default) where TEntity : class
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<TEntity> UpdateAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default) where TEntity : class
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<TEntity> FindAsync<TEntity>(object key, CancellationToken cancellationToken = default) where TEntity : class
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SaveChanges()
+        {
+            _session.Flush();
+        }
+
+        public Task SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            return _session.FlushAsync(cancellationToken);
+        }
+
+        public IQueryable<TEntity> Query<TEntity>() where TEntity : class
+        {
+            return _session.Query<TEntity>();
+        }
+
+        public TEntity Attach<TEntity>(TEntity entity) where TEntity : class
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<TEntity> AttachAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default) where TEntity : class
+        {
+            throw new NotImplementedException();
+        }
     }
 }

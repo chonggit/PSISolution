@@ -1,11 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using PSI.Data;
-using Microsoft.EntityFrameworkCore;
 
 namespace PSI.EntityFramework
 {
@@ -14,7 +9,7 @@ namespace PSI.EntityFramework
     /// </summary>
     public static class EntityFrameworkExtensions
     {
-        public static void AddEntityFramework(this IServiceCollection services, Action<DbContextOptionsBuilder>? optionsAction = null)
+        public static void AddEntityFramework(this IServiceCollection services, Action<DbContextOptionsBuilder> optionsAction = null)
         {
             services.AddDbContext<DbContext, PSIDbContext>(optionsAction);
             services.AddScoped<IDbSession, DbSession>();

@@ -14,11 +14,11 @@ namespace PSI.Inventory
         /// <summary>
         /// 物料编号
         /// </summary>
-        public virtual string? ItemCode { get; set; }
+        public virtual string ItemCode { get; set; }
 
         /// <summary>
         /// 物料名称
         /// </summary>
-        public virtual string? ItemName { get; set; }
+        public virtual string ItemName { get; set; }
     }
 }
