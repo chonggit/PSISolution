@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PSI.Administration.Identity;
 
 namespace PSI.EntityFramework
 {

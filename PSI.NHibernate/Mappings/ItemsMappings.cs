@@ -6,9 +6,9 @@ namespace PSI.NHibernate.Mappings
     /// <summary>
     /// 物料主数据映射配置
     /// </summary>
-    internal class ItemsMapping : ClassMapping<Items>
+    internal class ItemsMappings : ClassMapping<Items>
     {
-        public ItemsMapping()
+        public ItemsMappings()
         {
             Table("Items");
             Id(item => item.ItemCode, id =>
