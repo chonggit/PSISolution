@@ -8,16 +8,17 @@ namespace PSI.EntityFramework.Mapping
     {
         public void Configure(EntityTypeBuilder<Role> builder)
         {
-            builder.HasKey(r => r.Id);
-            builder.HasIndex(r => r.NormalizedName).HasDatabaseName("RoleNameIndex").IsUnique();
             builder.ToTable("AspNetRoles");
-            builder.Property(r => r.ConcurrencyStamp).IsConcurrencyToken();
 
-            builder.Property(u => u.Name).HasMaxLength(256);
-            builder.Property(u => u.NormalizedName).HasMaxLength(256);
+            builder.HasKey(x => x.Id); 
+            builder.Property(x => x.Name).HasMaxLength(64).IsRequired();
+            builder.Property(x => x.NormalizedName).HasMaxLength(64).IsRequired();
+            builder.Property(x => x.ConcurrencyStamp).IsConcurrencyToken();
 
-            builder.HasMany<UserRole>().WithOne().HasForeignKey(ur => ur.RoleId).IsRequired();
-            builder.HasMany<RoleClaim>().WithOne().HasForeignKey(rc => rc.RoleId).IsRequired();
+            builder.HasIndex(x => x.NormalizedName).HasDatabaseName("RoleNameIndex").IsUnique();
+
+            builder.HasMany<UserRole>().WithOne().HasForeignKey(x => x.RoleId).IsRequired();
+            builder.HasMany<RoleClaim>().WithOne().HasForeignKey(x => x.RoleId).IsRequired();
         }
     }
 }

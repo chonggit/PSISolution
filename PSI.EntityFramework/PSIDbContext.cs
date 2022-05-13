@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PSI.Administration.Identity;
 
 namespace PSI.EntityFramework
 {
@@ -11,8 +10,6 @@ namespace PSI.EntityFramework
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(builder);
-
             builder.ApplyConfigurationsFromAssembly(typeof(PSIDbContext).Assembly);
         }
     }

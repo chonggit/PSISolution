@@ -13,10 +13,12 @@ namespace PSI.EntityFramework.Mapping
     {
         public void Configure(EntityTypeBuilder<UserLogin> builder)
         {
-            builder.HasKey(l => new { l.LoginProvider, l.ProviderKey });
-            builder.Property(l => l.LoginProvider).HasMaxLength(32);
-            builder.Property(l => l.ProviderKey).HasMaxLength(32);
             builder.ToTable("AspNetUserLogins");
+
+            builder.HasKey(x => new {x.LoginProvider, x.ProviderKey });
+            builder.Property(x => x.LoginProvider).HasMaxLength(32);
+            builder.Property(x => x.ProviderKey).HasMaxLength(32);
+            builder.Property(x=>x.ProviderDisplayName).HasMaxLength(32).IsRequired();
         }
     }
 }

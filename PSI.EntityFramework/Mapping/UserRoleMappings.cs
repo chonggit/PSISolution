@@ -9,8 +9,8 @@ namespace PSI.EntityFramework.Mapping
     {
         public void Configure(EntityTypeBuilder<UserRole> builder)
         {
-            builder.HasKey(r => new { r.UserId, r.RoleId });
             builder.ToTable("AspNetUserRoles");
+            builder.HasKey(x => new { x.UserId, x.RoleId });
         }
     }
 }

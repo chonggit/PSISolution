@@ -13,7 +13,7 @@ public class UserClaimMappingMsSql : ClassMapping<UserClaim>
         Table("AspNetUserClaims");
         Id(e => e.Id, id =>
         {
-            id.Column("id");
+            id.Column("Id");
             id.Type(NHibernateUtil.Int32);
             id.Generator(Generators.Increment);
         });

@@ -8,8 +8,10 @@ namespace PSI.EntityFramework.Mapping
     {
         public void Configure(EntityTypeBuilder<UserClaim> builder)
         {
-            builder.HasKey(uc => uc.Id);
             builder.ToTable("AspNetUserClaims");
+            builder.HasKey(x => x.Id);
+            builder.Property(x => x.ClaimType).HasMaxLength(1024).IsRequired();
+            builder.Property(x => x.ClaimValue).HasMaxLength(1024).IsRequired();
         }
     }
 }

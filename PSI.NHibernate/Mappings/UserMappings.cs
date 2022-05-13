@@ -10,7 +10,6 @@ public class UserMappingMsSql : ClassMapping<User>
 
     public UserMappingMsSql()
     {
-        // Schema("dbo");
         Table("AspNetUsers");
         Id(e => e.Id, id =>
         {

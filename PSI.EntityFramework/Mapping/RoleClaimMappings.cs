@@ -8,8 +8,10 @@ namespace PSI.EntityFramework.Mapping
     {
         public void Configure(EntityTypeBuilder<RoleClaim> builder)
         {
-            builder.HasKey(rc => rc.Id);
             builder.ToTable("AspNetRoleClaims");
+            builder.HasKey(x => x.Id);
+            builder.Property(x => x.ClaimType).HasMaxLength(1024).IsRequired();
+            builder.Property(x => x.ClaimValue).HasMaxLength(1024).IsRequired();
         }
     }
 }

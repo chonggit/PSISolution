@@ -8,7 +8,6 @@ public class UserTokenMappingMsSql : ClassMapping<UserToken>
 {
     public UserTokenMappingMsSql()
     {
-        // Schema("dbo");
         Table("AspNetUserTokens");
         ComposedId(id =>
         {

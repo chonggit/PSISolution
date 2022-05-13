@@ -9,10 +9,11 @@ namespace PSI.EntityFramework.Mapping
     {
         public void Configure(EntityTypeBuilder<UserToken> builder)
         {
-            builder.HasKey(t => new { t.UserId, t.LoginProvider, t.Name });
-            builder.Property(t => t.LoginProvider).HasMaxLength(32);
-            builder.Property(t => t.Name).HasMaxLength(32);
             builder.ToTable("AspNetUserTokens");
+            builder.HasKey(x => new { x.UserId, x.LoginProvider, x.Name });
+            builder.Property(x => x.LoginProvider).HasMaxLength(32);
+            builder.Property(x => x.Name).HasMaxLength(32);
+            builder.Property(x => x.Value).HasMaxLength(256).IsRequired();
         }
     }
 }

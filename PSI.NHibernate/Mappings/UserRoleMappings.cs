@@ -8,7 +8,6 @@ public class UserRoleMappingMsSql : ClassMapping<UserRole>
 {
     public UserRoleMappingMsSql()
     {
-        // Schema("dbo");
         Table("AspNetUserRoles");
         ComposedId(id =>
         {
