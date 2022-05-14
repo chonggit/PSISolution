@@ -12,7 +12,7 @@ namespace PSI.EntityFramework
             _context = dbContext;
         }
 
-        protected virtual DbContext Context => _context;
+        protected virtual DbContext DbContext => _context;
 
         #region IDisposable
 
@@ -25,6 +25,7 @@ namespace PSI.EntityFramework
                 if (disposing)
                 {
                     // TODO: 释放托管状态(托管对象)
+                    DbContext.Dispose();
                 }
 
                 // TODO: 释放未托管的资源(未托管的对象)并重写终结器
@@ -51,67 +52,81 @@ namespace PSI.EntityFramework
 
         public TEntity Add<TEntity>(TEntity entity) where TEntity : class
         {
-            return Context.Add(entity).Entity;
+            return DbContext.Add(entity).Entity;
         }
 
         public TEntity Remove<TEntity>(TEntity entity) where TEntity : class
         {
-            return Context.Remove(entity).Entity;
+            return DbContext.Remove(entity).Entity;
         }
 
         public TEntity Update<TEntity>(TEntity entity) where TEntity : class
         {
-            return Context.Update(entity).Entity;
+            return DbContext.Update(entity).Entity;
         }
 
         public TEntity Find<TEntity>(object key) where TEntity : class
         {
-            return Context.Find<TEntity>(key);
+            return DbContext.Find<TEntity>(key);
         }
 
         public async Task<TEntity> AddAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default) where TEntity : class
         {
-            return (await Context.AddAsync(entity, cancellationToken)).Entity;
+            cancellationToken.ThrowIfCancellationRequested();
+
+            return (await DbContext.AddAsync(entity, cancellationToken)).Entity;
         }
 
         public Task<TEntity> RemoveAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default) where TEntity : class
         {
-            throw new NotImplementedException();
+            cancellationToken.ThrowIfCancellationRequested();
+
+            DbContext.Remove(entity);
+
+            return Task.FromResult(entity);
         }
 
         public Task<TEntity> UpdateAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default) where TEntity : class
         {
-            throw new NotImplementedException();
+            cancellationToken.ThrowIfCancellationRequested();
+
+            return Task.FromResult(DbContext.Update(entity).Entity);
         }
 
-        public Task<TEntity> FindAsync<TEntity>(object key, CancellationToken cancellationToken = default) where TEntity : class
+        public async Task<TEntity> FindAsync<TEntity>(object key, CancellationToken cancellationToken = default) where TEntity : class
         {
-            throw new NotImplementedException();
+            cancellationToken.ThrowIfCancellationRequested();
+
+            return await DbContext.FindAsync<TEntity>(new object[] { key }, cancellationToken);
         }
 
         public void SaveChanges()
         {
-            Context.SaveChanges();
+            DbContext.SaveChanges();
         }
 
         public Task SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            return Context.SaveChangesAsync(cancellationToken);
+            cancellationToken.ThrowIfCancellationRequested();
+
+            return DbContext.SaveChangesAsync(cancellationToken);
         }
 
         public IQueryable<TEntity> Query<TEntity>() where TEntity : class
         {
-            return Context.Set<TEntity>();
+            return DbContext.Set<TEntity>();
         }
 
         public TEntity Attach<TEntity>(TEntity entity) where TEntity : class
         {
-            throw new NotImplementedException();
+            return DbContext.Attach(entity).Entity;
         }
 
         public Task<TEntity> AttachAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default) where TEntity : class
         {
-            throw new NotImplementedException();
+            cancellationToken.ThrowIfCancellationRequested();
+
+            return Task.FromResult(DbContext.Attach(entity).Entity);
         }
     }
 }

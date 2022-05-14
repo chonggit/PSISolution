@@ -15,7 +15,7 @@ namespace PSI.EntityFramework.Tests
 
             services.AddEntityFramework(optionsBuilder =>
             {
-                optionsBuilder.UseSqlite("Data Source=PSISolution.db");
+                optionsBuilder.UseInMemoryDatabase("PSISolution");
             });
 
             ServiceProvider serviceProvider = services.BuildServiceProvider();
