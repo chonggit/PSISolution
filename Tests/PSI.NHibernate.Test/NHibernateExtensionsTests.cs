@@ -6,6 +6,7 @@ using NHibernate.Connection;
 using NHibernate.Dialect;
 using NHibernate.Driver;
 using NHibernate.Tool.hbm2ddl;
+using PSI.Data;
 using PSI.Inventory;
 
 namespace PSI.NHibernate.Test
@@ -13,12 +14,13 @@ namespace PSI.NHibernate.Test
     [TestClass]
     public class NHibernateExtensionsTests
     {
-        private const string CONNECTION_STRING = "Data Source=PSISolution.db";
+        private const string CONNECTION_STRING = "Data Source=:memory:";
 
         /// <summary>
         /// 创建数据库架构
         /// </summary>
-        public void CreateSchema()
+        [TestMethod]
+        public void CreateSchemaTest()
         {
             Configuration configuration = NHibernateExtensions.GetConfiguration(db =>
             {
@@ -38,8 +40,6 @@ namespace PSI.NHibernate.Test
         [TestMethod]
         public void AddNHibernateTest()
         {
-            CreateSchema();
-
             var services = new ServiceCollection();
 
             services.AddNHibernate(db =>
@@ -49,16 +49,9 @@ namespace PSI.NHibernate.Test
 
             ServiceProvider serviceProvider = services.BuildServiceProvider();
 
-            using (ISession session = serviceProvider.GetRequiredService<ISession>())
-            {
-                session.Save(new Items { ItemCode = "itemCode", ItemName = "itemName" });
-                session.Flush();
+            IDbSession dbSession = serviceProvider.GetRequiredService<IDbSession>();
 
-                Items items = session.Get<Items>("itemCode");
-
-                Assert.AreEqual("itemCode", items.ItemCode);
-                Assert.AreEqual("itemName", items.ItemName);
-            }
+            Assert.IsNotNull(dbSession);
         }
     }
 }

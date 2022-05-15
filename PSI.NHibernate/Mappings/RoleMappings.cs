@@ -13,13 +13,13 @@ public class RoleMappingMsSql : ClassMapping<Role>
         Id(e => e.Id, id =>
         {
             id.Column("Id");
-            id.Type(NHibernateUtil.Int32);
+            // id.Type(NHibernateUtil.Int32);
             id.Generator(Generators.Increment);
         });
         Property(e => e.Name, prop =>
         {
             prop.Column("Name");
-            prop.Type(NHibernateUtil.String);
+            // prop.Type(NHibernateUtil.String);
             prop.Length(64);
             prop.NotNullable(true);
             prop.Unique(true);
@@ -27,7 +27,7 @@ public class RoleMappingMsSql : ClassMapping<Role>
         Property(e => e.NormalizedName, prop =>
         {
             prop.Column("NormalizedName");
-            prop.Type(NHibernateUtil.String);
+            // prop.Type(NHibernateUtil.String);
             prop.Length(64);
             prop.NotNullable(true);
             prop.Unique(true);
@@ -35,7 +35,7 @@ public class RoleMappingMsSql : ClassMapping<Role>
         Property(e => e.ConcurrencyStamp, prop =>
         {
             prop.Column("ConcurrencyStamp");
-            prop.Type(NHibernateUtil.String);
+            // prop.Type(NHibernateUtil.String);
             prop.Length(36);
             prop.NotNullable(false);
         });

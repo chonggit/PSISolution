@@ -14,12 +14,12 @@ public class UserRoleMappingMsSql : ClassMapping<UserRole>
             id.Property(e => e.UserId, prop =>
             {
                 prop.Column("UserId");
-                prop.Type(NHibernateUtil.Int32);
+                // prop.Type(NHibernateUtil.Int32);
             });
             id.Property(e => e.RoleId, prop =>
             {
                 prop.Column("RoleId");
-                prop.Type(NHibernateUtil.Int32);
+                // prop.Type(NHibernateUtil.Int32);
             });
         });
     }

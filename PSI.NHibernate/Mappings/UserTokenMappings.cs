@@ -14,25 +14,25 @@ public class UserTokenMappingMsSql : ClassMapping<UserToken>
             id.Property(e => e.UserId, prop =>
             {
                 prop.Column("UserId");
-                prop.Type(NHibernateUtil.Int32);
+                // prop.Type(NHibernateUtil.Int32);
             });
             id.Property(e => e.LoginProvider, prop =>
             {
                 prop.Column("LoginProvider");
                 prop.Type(NHibernateUtil.String);
-                prop.Length(32);
+                // prop.Length(32);
             });
             id.Property(e => e.Name, prop =>
             {
                 prop.Column("Name");
                 prop.Type(NHibernateUtil.String);
-                prop.Length(32);
+                // prop.Length(32);
             });
         });
         Property(e => e.Value, prop =>
         {
             prop.Column("Value");
-            prop.Type(NHibernateUtil.String);
+            // prop.Type(NHibernateUtil.String);
             prop.Length(256);
             prop.NotNullable(true);
         });

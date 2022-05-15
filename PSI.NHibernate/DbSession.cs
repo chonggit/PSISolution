@@ -25,6 +25,7 @@ namespace PSI.NHibernate
                 if (disposing)
                 {
                     // TODO: 释放托管状态(托管对象)
+                    _session.Dispose();
                 }
 
                 // TODO: 释放未托管的资源(未托管的对象)并重写终结器
@@ -51,7 +52,9 @@ namespace PSI.NHibernate
 
         public TEntity Add<TEntity>(TEntity entity) where TEntity : class
         {
-            return (TEntity)Session.Save(entity);
+            Session.Save(entity);
+
+            return entity;
         }
 
         public TEntity Find<TEntity>(object key) where TEntity : class
@@ -73,24 +76,38 @@ namespace PSI.NHibernate
             return entity;
         }
 
-        public Task<TEntity> AddAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default) where TEntity : class
+        public async Task<TEntity> AddAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default) where TEntity : class
         {
-            throw new NotImplementedException();
+            cancellationToken.ThrowIfCancellationRequested();
+
+            await Session.SaveAsync(entity, cancellationToken);
+
+            return entity;
         }
 
-        public Task<TEntity> RemoveAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default) where TEntity : class
+        public async Task<TEntity> RemoveAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default) where TEntity : class
         {
-            throw new NotImplementedException();
+            cancellationToken.ThrowIfCancellationRequested();
+
+            await Session.DeleteAsync(entity, cancellationToken);
+
+            return entity;
         }
 
-        public Task<TEntity> UpdateAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default) where TEntity : class
+        public async Task<TEntity> UpdateAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default) where TEntity : class
         {
-            throw new NotImplementedException();
+            cancellationToken.ThrowIfCancellationRequested();
+
+            await Session.UpdateAsync(entity, cancellationToken);
+
+            return entity;
         }
 
         public Task<TEntity> FindAsync<TEntity>(object key, CancellationToken cancellationToken = default) where TEntity : class
         {
-            throw new NotImplementedException();
+            cancellationToken.ThrowIfCancellationRequested();
+
+            return Session.GetAsync<TEntity>(key, cancellationToken);
         }
 
         public void SaveChanges()
@@ -110,12 +127,14 @@ namespace PSI.NHibernate
 
         public TEntity Attach<TEntity>(TEntity entity) where TEntity : class
         {
-            throw new NotImplementedException();
+            return Session.Merge(entity);
         }
 
         public Task<TEntity> AttachAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default) where TEntity : class
         {
-            throw new NotImplementedException();
+            cancellationToken.ThrowIfCancellationRequested();
+
+            return Session.MergeAsync(entity, cancellationToken);
         }
     }
 }

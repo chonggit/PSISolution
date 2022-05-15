@@ -13,27 +13,27 @@ public class RoleClaimMappingMsSql : ClassMapping<RoleClaim>
         Id(e => e.Id, id =>
         {
             id.Column("Id");
-            id.Type(NHibernateUtil.Int32);
+            // id.Type(NHibernateUtil.Int32);
             id.Generator(Generators.Increment);
         });
         Property(e => e.ClaimType, prop =>
         {
             prop.Column("ClaimType");
-            prop.Type(NHibernateUtil.String);
+            // prop.Type(NHibernateUtil.String);
             prop.Length(1024);
             prop.NotNullable(true);
         });
         Property(e => e.ClaimValue, prop =>
         {
             prop.Column("ClaimValue");
-            prop.Type(NHibernateUtil.String);
+            // prop.Type(NHibernateUtil.String);
             prop.Length(1024);
             prop.NotNullable(true);
         });
         Property(e => e.RoleId, prop =>
         {
             prop.Column("RoleId");
-            prop.Type(NHibernateUtil.Int32);
+            // prop.Type(NHibernateUtil.Int32);
             prop.NotNullable(true);
         });
     }
