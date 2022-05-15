@@ -13,7 +13,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{FFF7A9C7
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PSI.NHibernate.Test", "Tests\PSI.NHibernate.Test\PSI.NHibernate.Test.csproj", "{F9B4304D-D3DD-4FC0-808F-CAE7CF767B69}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSI.EntityFramework.Tests", "Tests\PSI.EntityFramework.Tests\PSI.EntityFramework.Tests.csproj", "{05370DBB-D736-44FF-AD0A-58B8A52F02B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PSI.EntityFramework.Tests", "Tests\PSI.EntityFramework.Tests\PSI.EntityFramework.Tests.csproj", "{05370DBB-D736-44FF-AD0A-58B8A52F02B1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSI.Test", "Tests\PSI.Test\PSI.Test.csproj", "{9037839D-BCD4-463F-85C4-DF62FA7078CC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,10 @@ Global
 		{05370DBB-D736-44FF-AD0A-58B8A52F02B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{05370DBB-D736-44FF-AD0A-58B8A52F02B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{05370DBB-D736-44FF-AD0A-58B8A52F02B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9037839D-BCD4-463F-85C4-DF62FA7078CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9037839D-BCD4-463F-85C4-DF62FA7078CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9037839D-BCD4-463F-85C4-DF62FA7078CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9037839D-BCD4-463F-85C4-DF62FA7078CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -48,6 +54,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{F9B4304D-D3DD-4FC0-808F-CAE7CF767B69} = {FFF7A9C7-0093-42D5-B5F9-A5C31BC3A9C5}
 		{05370DBB-D736-44FF-AD0A-58B8A52F02B1} = {FFF7A9C7-0093-42D5-B5F9-A5C31BC3A9C5}
+		{9037839D-BCD4-463F-85C4-DF62FA7078CC} = {FFF7A9C7-0093-42D5-B5F9-A5C31BC3A9C5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F2BF745F-D5B1-4D4F-9FC2-B8D6CF954BE1}
