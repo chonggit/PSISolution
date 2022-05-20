@@ -13,7 +13,7 @@ namespace PSI.Administration.Identity
                 && ProviderKey == other.ProviderKey;
         }
 
-        public override bool Equals(object? obj)
+        public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj))
             {

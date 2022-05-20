@@ -14,7 +14,7 @@ namespace PSI.Administration.Identity
                 && Name == other.Name;
         }
 
-        public override bool Equals(object? obj)
+        public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj))
             {
