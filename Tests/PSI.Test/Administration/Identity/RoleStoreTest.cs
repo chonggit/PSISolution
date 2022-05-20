@@ -12,16 +12,26 @@ namespace PSI.Test.Administration.Identity
     public class RoleStoreTest
     {
         RoleStore roleStore = null;
+        ServiceProvider serviceProvider = null;
 
         [TestInitialize]
         public void Setup()
         {
             var services = new ServiceCollection();
             services.AddEntityFramework(options => options.UseInMemoryDatabase("PSISolution"));
+            serviceProvider = services.BuildServiceProvider();
 
             IDbSession session = services.BuildServiceProvider().GetRequiredService<IDbSession>();
 
             roleStore = new RoleStore(session, new IdentityErrorDescriber());
+        }
+
+        [TestCleanup]
+        public void Cleanup()
+        {
+            serviceProvider.Dispose();
+            serviceProvider = null;
+            roleStore = null;
         }
 
         [TestMethod]
