@@ -1,0 +1,18 @@
+
+<form [formGroup]="loginForm" class="login-form ant-form ant-form-horizontal" (submit)="onSubmit()">
+  <nz-form-item>
+    <nz-form-control nzErrorTip="Please input your username!">
+      <nz-input-group nzPrefixIcon="user">
+        <input type="text" class="ant-input ant-input-status-error" formControlName="userName" placeholder="用户" />
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control nzErrorTip="Please input your Password!">
+      <nz-input-group nzPrefixIcon="lock">
+        <input type="password" class="ant-input ant-input-status-error" formControlName="password" placeholder="密码" />
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+  <button class="ant-btn login-form-button login-form-margin ant-btn-primary">登录</button>
+</form>
