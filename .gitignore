@@ -363,3 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 /ng-ui/.vscode
 /ng-ui/.angular/cache
+/ng-ui/dist

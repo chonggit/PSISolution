@@ -30,7 +30,11 @@
               "src/assets"
             ],
             "styles": [
-              "./node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
+              {
+                "bundleName": "ng-zorro-antd",
+                "input": "./node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
+                "inject": true
+              },
               "src/styles.css"
             ],
             "scripts": []
@@ -41,7 +45,7 @@
                 {
                   "type": "initial",
                   "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumError": "2mb"
                 },
                 {
                   "type": "anyComponentStyle",
