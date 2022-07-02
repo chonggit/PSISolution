@@ -365,3 +365,4 @@ FodyWeavers.xsd
 /ng-ui/.angular/cache
 /ng-ui/dist
 /PSI.API/Properties
+/Tests/PSI.API.Test/Properties
