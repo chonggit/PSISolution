@@ -49,14 +49,15 @@ namespace PSI.API.v1
         [HttpPost]
         public async Task<IdentityResult> Post(Role role)
         {
-            if (await _roleManager.RoleExistsAsync(role.NormalizedName))
+            if (await _roleManager.RoleExistsAsync(role.Name))
             {
                 return IdentityResult.Failed(new IdentityError()
                 {
-                    Description = $"角色{role.NormalizedName}已存在！"
+                    Description = $"角色{role.Name}已存在！"
                 });
             }
-            return await _roleManager.CreateAsync(role);
+            var result = await _roleManager.CreateAsync(role);
+            return result;
         }
         /// <summary>
         /// 删除角色
@@ -84,13 +85,10 @@ namespace PSI.API.v1
         /// </summary>
         /// <param name="role">将要更新的角色</param>
         /// <returns>更新结果</returns>
+        [HttpPut]
         [HttpPatch]
         public async Task<IdentityResult> Patch(Role role)
         {
-            if (await _roleManager.RoleExistsAsync(role.NormalizedName) == false)
-            {
-                return IdentityResult.Failed(new IdentityError() { Description = $"角色{role.NormalizedName}不存在！" });
-            }
             return await _roleManager.UpdateAsync(role);
         }
 
@@ -99,10 +97,10 @@ namespace PSI.API.v1
         /// </summary>
         /// <param name="normalizedName">角色名</param>
         /// <returns>true：已存在，false：不存在</returns>
-        [HttpGet("RoleExists/{normalizedName}")]
-        public Task<bool> RoleExists([FromRoute] string normalizedName)
+        [HttpGet("RoleExists/{name}")]
+        public Task<bool> RoleExists([FromRoute] string name)
         {
-            return _roleManager.RoleExistsAsync(normalizedName);
+            return _roleManager.RoleExistsAsync(name);
         }
     }
 }
