@@ -21,7 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\PSI.NHibernate\PSI.NHibernate.csproj" />
     <ProjectReference Include="..\..\PSI\PSI.csproj" />
   </ItemGroup>
 

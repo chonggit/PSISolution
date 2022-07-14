@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 using System.Data.SQLite;
 using NHibernate;
 using PSI.Inventory;
+using PSI.Data;
 
-namespace PSI.NHibernate.Test
+namespace PSI.Test.Data
 {
     [TestClass]
     public class DbSessionTest
@@ -17,7 +18,7 @@ namespace PSI.NHibernate.Test
         ISessionFactory sessionFactory;
         ISession session;
         SchemaExport export;
-        NHDbSession dbSession;
+        IDbSession dbSession;
 
         [TestInitialize]
         public void Setup()
@@ -26,7 +27,7 @@ namespace PSI.NHibernate.Test
 
             sessionFactory = config.BuildSessionFactory();
             session = sessionFactory.OpenSession();
-            dbSession = new DbSession(session);
+            dbSession = null;//= new NHDbSession(session);
             export = new SchemaExport(config);
             export.Execute(true, true, false);
 
