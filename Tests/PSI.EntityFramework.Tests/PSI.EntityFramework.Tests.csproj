@@ -31,8 +31,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\PSI.EntityFramework\PSI.EntityFramework.csproj" />
-  </ItemGroup>
-
 </Project>
