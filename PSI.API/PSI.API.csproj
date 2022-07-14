@@ -9,13 +9,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.6" />
-    <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="6.0.6" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="6.0.7" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.16.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PSI.EntityFramework\PSI.EntityFramework.csproj" />
     <ProjectReference Include="..\PSI\PSI.csproj" />
     <InternalsVisibleTo Include="PSI.API.Test" />
   </ItemGroup>
