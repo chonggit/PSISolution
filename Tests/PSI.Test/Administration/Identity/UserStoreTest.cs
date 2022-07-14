@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using PSI.Administration.Identity;
 using PSI.Data;
-using PSI.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +19,7 @@ namespace PSI.Test.Administration.Identity
         public void Setup()
         {
             var services = new ServiceCollection();
-            services.AddEntityFramework(options => options.UseInMemoryDatabase("PSISolution"));
+            // services.AddEntityFramework(options => options.UseInMemoryDatabase("PSISolution"));
             serviceProvider = services.BuildServiceProvider();
 
             IDbSession session = services.BuildServiceProvider().GetRequiredService<IDbSession>();

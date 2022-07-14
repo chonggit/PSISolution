@@ -1,18 +1,25 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PSI.Data;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using NHibernate;
 
-namespace PSI.EntityFramework
+namespace PSI.Data
 {
-    public class DbSession : IDbSession, IDisposable
+    /// <summary>
+    /// NHibernate Db Session
+    /// </summary>
+    internal class NHDbSession : IDbSession, IDisposable
     {
-        private readonly DbContext _context;
+        private readonly ISession _session;
 
-        public DbSession(DbContext dbContext)
+        public NHDbSession(ISession session)
         {
-            _context = dbContext;
+            _session = session;
         }
 
-        protected virtual DbContext DbContext => _context;
+        protected virtual ISession Session => _session;
 
         #region IDisposable
 
@@ -25,7 +32,7 @@ namespace PSI.EntityFramework
                 if (disposing)
                 {
                     // TODO: 释放托管状态(托管对象)
-                    DbContext.Dispose();
+                    _session.Dispose();
                 }
 
                 // TODO: 释放未托管的资源(未托管的对象)并重写终结器
@@ -52,81 +59,89 @@ namespace PSI.EntityFramework
 
         public TEntity Add<TEntity>(TEntity entity) where TEntity : class
         {
-            return DbContext.Add(entity).Entity;
-        }
+            Session.Save(entity);
 
-        public TEntity Remove<TEntity>(TEntity entity) where TEntity : class
-        {
-            return DbContext.Remove(entity).Entity;
-        }
-
-        public TEntity Update<TEntity>(TEntity entity) where TEntity : class
-        {
-            return DbContext.Update(entity).Entity;
+            return entity;
         }
 
         public TEntity Find<TEntity>(object key) where TEntity : class
         {
-            return DbContext.Find<TEntity>(key);
+            return Session.Get<TEntity>(key);
+        }
+
+        public TEntity Remove<TEntity>(TEntity entity) where TEntity : class
+        {
+            Session.Delete(entity);
+
+            return entity;
+        }
+
+        public TEntity Update<TEntity>(TEntity entity) where TEntity : class
+        {
+            Session.Update(entity);
+
+            return entity;
         }
 
         public async Task<TEntity> AddAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default) where TEntity : class
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            return (await DbContext.AddAsync(entity, cancellationToken)).Entity;
+            await Session.SaveAsync(entity, cancellationToken);
+
+            return entity;
         }
 
-        public Task<TEntity> RemoveAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default) where TEntity : class
+        public async Task<TEntity> RemoveAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default) where TEntity : class
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            DbContext.Remove(entity);
+            await Session.DeleteAsync(entity, cancellationToken);
 
-            return Task.FromResult(entity);
+            return entity;
         }
 
-        public Task<TEntity> UpdateAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default) where TEntity : class
+        public async Task<TEntity> UpdateAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default) where TEntity : class
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            return Task.FromResult(DbContext.Update(entity).Entity);
+            await Session.UpdateAsync(entity, cancellationToken);
+
+            return entity;
         }
 
-        public async Task<TEntity> FindAsync<TEntity>(object key, CancellationToken cancellationToken = default) where TEntity : class
+        public Task<TEntity> FindAsync<TEntity>(object key, CancellationToken cancellationToken = default) where TEntity : class
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            return await DbContext.FindAsync<TEntity>(new object[] { key }, cancellationToken);
+            return Session.GetAsync<TEntity>(key, cancellationToken);
         }
 
         public void SaveChanges()
         {
-            DbContext.SaveChanges();
+            _session.Flush();
         }
 
         public Task SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            cancellationToken.ThrowIfCancellationRequested();
-
-            return DbContext.SaveChangesAsync(cancellationToken);
+            return _session.FlushAsync(cancellationToken);
         }
 
         public IQueryable<TEntity> Query<TEntity>() where TEntity : class
         {
-            return DbContext.Set<TEntity>();
+            return _session.Query<TEntity>();
         }
 
         public TEntity Attach<TEntity>(TEntity entity) where TEntity : class
         {
-            return DbContext.Attach(entity).Entity;
+            return Session.Merge(entity);
         }
 
         public Task<TEntity> AttachAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default) where TEntity : class
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            return Task.FromResult(DbContext.Attach(entity).Entity);
+            return Session.MergeAsync(entity, cancellationToken);
         }
     }
 }
