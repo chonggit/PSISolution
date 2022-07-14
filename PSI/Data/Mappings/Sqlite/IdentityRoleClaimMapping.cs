@@ -33,8 +33,7 @@ namespace PSI.Data.Mappings.Sqlite
             Property(e => e.RoleId, prop =>
             {
                 prop.Column("role_id");
-                prop.Type(NHibernateUtil.String);
-                prop.Length(32);
+                prop.Type(NHibernateUtil.Int32);
                 prop.NotNullable(true);
             });
         }

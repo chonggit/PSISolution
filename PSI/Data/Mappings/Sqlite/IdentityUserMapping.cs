@@ -12,9 +12,8 @@ namespace PSI.Data.Mappings.Sqlite
             Table("aspnet_users");
             Id(e => e.Id, id => {
                 id.Column("id");
-                id.Type(NHibernateUtil.String);
-                id.Length(32);
-                id.Generator(Generators.UUIDHex("N"));
+                id.Type(NHibernateUtil.Int32);
+                id.Generator(Generators.Identity);
             });
             Property(e => e.UserName, prop => {
                 prop.Column("user_name");
@@ -34,18 +33,18 @@ namespace PSI.Data.Mappings.Sqlite
                 prop.Column("email");
                 prop.Type(NHibernateUtil.String);
                 prop.Length(256);
-                prop.NotNullable(true);
+                // prop.NotNullable(true);
             });
             Property(e => e.NormalizedEmail, prop => {
                 prop.Column("normalized_email");
                 prop.Type(NHibernateUtil.String);
                 prop.Length(256);
-                prop.NotNullable(true);
+                // prop.NotNullable(true);
             });
             Property(e => e.EmailConfirmed, prop => {
                 prop.Column("email_confirmed");
                 prop.Type(NHibernateUtil.Boolean);
-                prop.NotNullable(true);
+                // prop.NotNullable(true);
             });
             Property(e => e.PhoneNumber, prop => {
                 prop.Column("phone_number");

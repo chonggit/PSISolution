@@ -13,9 +13,8 @@ namespace PSI.Data.Mappings.Sqlite
             Id(e => e.Id, id =>
             {
                 id.Column("id");
-                id.Type(NHibernateUtil.String);
-                id.Length(32);
-                id.Generator(Generators.UUIDHex("N"));
+                id.Type(NHibernateUtil.Int32);
+                id.Generator(Generators.Identity);
             });
             Property(e => e.Name, prop =>
             {

@@ -12,8 +12,7 @@ namespace PSI.Data.Mappings.Sqlite
             ComposedId(id => {
                 id.Property(e => e.UserId, prop => {
                     prop.Column("user_id");
-                    prop.Type(NHibernateUtil.String);
-                    prop.Length(32);
+                    prop.Type(NHibernateUtil.Int32);
                 });
                 id.Property(e => e.LoginProvider, prop => {
                     prop.Column("login_provider");

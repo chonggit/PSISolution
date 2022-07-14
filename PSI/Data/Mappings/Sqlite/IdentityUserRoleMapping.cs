@@ -14,14 +14,12 @@ namespace PSI.Data.Mappings.Sqlite
                 id.Property(e => e.UserId, prop =>
                 {
                     prop.Column("user_id");
-                    prop.Type(NHibernateUtil.String);
-                    prop.Length(32);
+                    prop.Type(NHibernateUtil.Int32);
                 });
                 id.Property(e => e.RoleId, prop =>
                 {
                     prop.Column("role_id");
-                    prop.Type(NHibernateUtil.String);
-                    prop.Length(32);
+                    prop.Type(NHibernateUtil.Int32);
                 });
             });
         }
