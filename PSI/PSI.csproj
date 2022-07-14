@@ -11,8 +11,4 @@
     <PackageReference Include="NHibernate" Version="5.3.12" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Data\Mappings\" />
-  </ItemGroup>
-
 </Project>

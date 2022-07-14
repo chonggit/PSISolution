@@ -22,15 +22,15 @@ namespace PSI.Test.Data
         [TestMethod]
         public void CreateSchemaTest()
         {
-            Configuration configuration = NHibernateExtensions.GetConfiguration(db =>
-            {
-                db.ConnectionProvider<DriverConnectionProvider>();
-                db.Driver<SQLite20Driver>();
-                db.Dialect<SQLiteDialect>();
-                db.ConnectionString = CONNECTION_STRING;
-                db.LogSqlInConsole = true;
-            });
-
+            //Configuration configuration = NHibernateExtensions.GetConfiguration(db =>
+            //{
+            //    db.ConnectionProvider<DriverConnectionProvider>();
+            //    db.Driver<SQLite20Driver>();
+            //    db.Dialect<SQLiteDialect>();
+            //    db.ConnectionString = CONNECTION_STRING;
+            //    db.LogSqlInConsole = true;
+            //});
+            Configuration configuration = new Configuration();
             new SchemaExport(configuration).Create(false, true);
         }
 

@@ -9,6 +9,7 @@ using System.Data.SQLite;
 using NHibernate;
 using PSI.Inventory;
 using PSI.Data;
+using NHibernate.Cfg;
 
 namespace PSI.Test.Data
 {
@@ -23,12 +24,12 @@ namespace PSI.Test.Data
         [TestInitialize]
         public void Setup()
         {
-            var config = NHibernateExtensions.GetConfiguration(db => db.UseSqlite("Data Source=PSISolution.db"));
-
-            sessionFactory = config.BuildSessionFactory();
+            //var config = NHibernateExtensions.GetConfiguration(db => db.UseSqlite("Data Source=PSISolution.db"));
+            Configuration configuration = new Configuration();
+            sessionFactory = configuration.BuildSessionFactory();
             session = sessionFactory.OpenSession();
             dbSession = null;//= new NHDbSession(session);
-            export = new SchemaExport(config);
+            export = new SchemaExport(configuration);
             export.Execute(true, true, false);
 
         }

@@ -2,11 +2,10 @@
 using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Cfg.MappingSchema;
-using NHibernate.Mapping.ByCode;
-using NHibernate.Cfg.Loquacious;
-using NHibernate.Driver;
-using NHibernate.Dialect;
 using NHibernate.Connection;
+using NHibernate.Dialect;
+using NHibernate.Driver;
+using NHibernate.Mapping.ByCode;
 
 namespace PSI.Data
 {
@@ -20,72 +19,72 @@ namespace PSI.Data
         /// </summary>
         /// <param name="services">ServiceCollection</param>
         /// <param name="dbConfig">NHibernate 数据库配置</param>
-        public static void AddNHibernate(this IServiceCollection services, Action<DbIntegrationConfigurationProperties> db)
+        public static void AddNHibernate(this IServiceCollection services, Action<Configuration> configurate)
         {
             services.AddSingleton((servicProvider) =>
             {
-                return GetConfiguration(db).BuildSessionFactory();
+                var config = new Configuration();
+
+                configurate(config);
+
+                return config;
             });
 
-            services.AddScoped((servicProvider) =>
-            {
-                ISessionFactory factory = servicProvider.GetRequiredService<ISessionFactory>();
-
-                return factory.OpenSession();
-            });
-
+            services.AddSingleton((servicProvider) => servicProvider.GetRequiredService<Configuration>().BuildSessionFactory());
+            services.AddScoped((servicProvider) => servicProvider.GetRequiredService<ISessionFactory>().OpenSession());
             services.AddScoped<IDbSession, NHDbSession>();
         }
+
 
         /// <summary>
         /// 使用 Sqlite 数据库
         /// </summary>
-        /// <param name="db">DbIntegrationConfigurationProperties</param>
-        /// <param name="connectionString">连接字符串</param>
-        public static void UseSqlite(this DbIntegrationConfigurationProperties db, string connectionString)
+        /// <param name="config">配置</param>
+        /// <param name="connectionString">数据库连接字符串</param>
+        public static void UseSqlite(this Configuration config, string connectionString)
         {
-            db.ConnectionProvider<DriverConnectionProvider>();
-            db.Driver<SQLite20Driver>();
-            db.Dialect<SQLiteDialect>();
-            db.ConnectionString = connectionString;
+            config.DataBaseIntegration(db =>
+            {
+                db.ConnectionProvider<DriverConnectionProvider>();
+                db.Driver<SQLite20Driver>();
+                db.Dialect<SQLiteDialect>();
+                db.ConnectionString = connectionString;
 #if DEBUG
-            db.LogSqlInConsole = true;
+                db.LogSqlInConsole = true;
 #endif
+            });
+
+            AddMappings(config, "PSI.Data.Mappings.Sqlite");
         }
 
         /// <summary>
-        /// 获取 NHibernate 配置
+        /// 获取映射配置类
         /// </summary>
-        /// <param name="dbConfig">数据配置</param>
-        /// <returns>NHibernate 配置</returns>
-        public static Configuration GetConfiguration(Action<DbIntegrationConfigurationProperties> dbConfig)
+        /// <param name="space">映射配置类所在命名空间</param>
+        /// <returns>映射配置类</returns>
+        static Type[] GetMappingTypes(string space)
         {
-            var config = new Configuration();
-
-            config.DataBaseIntegration(dbConfig);
-
-            config.AddMapping(CreateHbmMapping());
-
-            return config;
-        }
-
-        /// <summary>
-        ///获取创建数据库映射
-        /// </summary>
-        /// <returns>Hbm 数据库映射</returns>
-        static HbmMapping CreateHbmMapping()
-        {
-            Type[] types = typeof(NHibernateExtensions).Assembly.GetTypes()
-                       .Where(t => t.IsClass && typeof(IConformistHoldersProvider).IsAssignableFrom(t))
+            return typeof(NHibernateExtensions).Assembly.GetTypes()
+                       .Where(t => t.IsClass
+                       && typeof(IConformistHoldersProvider).IsAssignableFrom(t)
+                       && t.Namespace == space)
                        .ToArray();
+        }
 
+        /// <summary>
+        /// 添加关系映射到配置
+        /// </summary>
+        /// <param name="config">配置</param>
+        /// <param name="space">映射配置类所在命名空间</param>
+        static void AddMappings(Configuration config, string space)
+        {
             var modelMapper = new ModelMapper();
 
-            modelMapper.AddMappings(types);
+            modelMapper.AddMappings(GetMappingTypes(space));
 
             HbmMapping mapping = modelMapper.CompileMappingForAllExplicitlyAddedEntities();
 
-            return mapping;
+            config.AddMapping(mapping);
         }
     }
 }
