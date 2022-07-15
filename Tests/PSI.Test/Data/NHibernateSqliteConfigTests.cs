@@ -10,7 +10,7 @@ namespace PSI.Test.Data
     public class NHibernateSqliteConfigTests
     {
         //private const string CONNECTION_STRING = "Data Source=:memory:";
-        private const string CONNECTION_STRING = "Data Source = PSISolution.db";
+        private const string CONNECTION_STRING = "Data Source =PSISolution.db";
         private ServiceCollection services = new ServiceCollection();
         private ServiceProvider serviceProvider;
 
@@ -24,8 +24,7 @@ namespace PSI.Test.Data
 
             serviceProvider = services.BuildServiceProvider();
 
-            Configuration configuration = serviceProvider.GetService<Configuration>();
-            new SchemaExport(configuration).Create(false, true);
+            new SchemaExport(serviceProvider.GetService<Configuration>()).Create(false, true);
         }
 
         [TestCleanup]
@@ -54,12 +53,12 @@ namespace PSI.Test.Data
         }
 
         [TestMethod]
-        public void IdentityUserConfig()
+        public void IdentityUserTest()
         {
             IDbSession dbSession = serviceProvider.GetService<IDbSession>();
             IQueryable<User> users = dbSession.Query<User>();
 
-            Assert.AreEqual(users.Count(), 0);
+            Assert.AreEqual(0, users.Count());
 
             dbSession.Add(new User
             {
@@ -81,7 +80,93 @@ namespace PSI.Test.Data
 
             dbSession.SaveChanges();
 
-            Assert.AreEqual(users.Count(),1);
+            Assert.AreEqual(1, users.Count());
+        }
+
+        [TestMethod]
+        public void IdentityRoleTest()
+        {
+            IDbSession dbSession = serviceProvider.GetService<IDbSession>();
+            IQueryable<Role> roles = dbSession.Query<Role>();
+
+            Assert.AreEqual(0, roles.Count());
+
+            dbSession.Add(new Role { Name = "role", NormalizedName = "ROLE", ConcurrencyStamp = "stamp" });
+
+            dbSession.SaveChanges();
+
+            Assert.AreEqual(1, roles.Count());
+        }
+
+        [TestMethod]
+        public void IdentityRoleClaimTest()
+        {
+            IDbSession dbSession = serviceProvider.GetService<IDbSession>();
+            IQueryable<RoleClaim> roleClaims = dbSession.Query<RoleClaim>();
+
+            Assert.AreEqual(0, roleClaims.Count());
+
+            dbSession.Add(new RoleClaim { ClaimType = "claimType", ClaimValue = "claimValue", RoleId = 1 });
+            dbSession.SaveChanges();
+
+            Assert.AreEqual(1, roleClaims.Count());
+        }
+
+        [TestMethod]
+        public void IdentityUserClaimTest()
+        {
+            IDbSession dbSession = serviceProvider.GetService<IDbSession>();
+            IQueryable<UserClaim> userClaims = dbSession.Query<UserClaim>();
+
+            Assert.AreEqual(0, userClaims.Count());
+
+            dbSession.Add(new UserClaim { ClaimType = "claimType", ClaimValue = "claimValue", UserId = 1 });
+            dbSession.SaveChanges();
+
+            Assert.AreEqual(1, userClaims.Count());
+
+        }
+
+        [TestMethod]
+        public void IdentityUserLoginTest()
+        {
+            IDbSession dbSession = serviceProvider.GetService<IDbSession>();
+            IQueryable<UserLogin> userLogins = dbSession.Query<UserLogin>();
+
+            Assert.AreEqual(0, userLogins.Count());
+
+            dbSession.Add(new UserLogin { ProviderKey = "key", LoginProvider = "loginProvider", ProviderDisplayName = "displayName", UserId = 1 });
+            dbSession.SaveChanges();
+
+            Assert.AreEqual(1, userLogins.Count());
+        }
+
+        [TestMethod]
+        public void IdentityUserRoleTest()
+        {
+            IDbSession dbSession = serviceProvider.GetService<IDbSession>();
+            IQueryable<UserRole> userRoles = dbSession.Query<UserRole>();
+
+            Assert.AreEqual(0, userRoles.Count());
+
+            dbSession.Add(new UserRole { RoleId = 1, UserId = 1 });
+            dbSession.SaveChanges();
+
+            Assert.AreEqual(1, userRoles.Count());
+        }
+
+        [TestMethod]
+        public void IdentityUserTokenTest()
+        {
+            IDbSession dbSession = serviceProvider.GetService<IDbSession>();
+            IQueryable<UserToken> userTokens = dbSession.Query<UserToken>();
+
+            Assert.AreEqual(0, userTokens.Count());
+
+            dbSession.Add(new UserToken { LoginProvider = "provider", Name = "name", UserId = 1, Value = "value" });
+            dbSession.SaveChanges();
+
+            Assert.AreEqual(1, userTokens.Count());
         }
     }
 }
