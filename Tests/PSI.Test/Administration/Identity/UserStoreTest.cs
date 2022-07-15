@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using NHibernate.Cfg;
+using NHibernate.Tool.hbm2ddl;
 using PSI.Administration.Identity;
 using PSI.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PSI.Test.Administration.Identity
 {
@@ -19,8 +16,13 @@ namespace PSI.Test.Administration.Identity
         public void Setup()
         {
             var services = new ServiceCollection();
-            // services.AddEntityFramework(options => options.UseInMemoryDatabase("PSISolution"));
+            services.AddNHibernate(config =>
+            {
+                config.UseSqlite("Data Source =PSISolution.db");
+            });
             serviceProvider = services.BuildServiceProvider();
+
+            new SchemaExport(serviceProvider.GetService<Configuration>()).Create(false, true);
 
             IDbSession session = services.BuildServiceProvider().GetRequiredService<IDbSession>();
 

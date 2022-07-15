@@ -9,8 +9,6 @@ namespace PSI.Test.Data
     [TestClass]
     public class NHibernateSqliteConfigTests
     {
-        //private const string CONNECTION_STRING = "Data Source=:memory:";
-        private const string CONNECTION_STRING = "Data Source =PSISolution.db";
         private ServiceCollection services = new ServiceCollection();
         private ServiceProvider serviceProvider;
 
@@ -19,7 +17,7 @@ namespace PSI.Test.Data
         {
             services.AddNHibernate(config =>
             {
-                config.UseSqlite(CONNECTION_STRING);
+                config.UseSqlite("Data Source =PSISolution.db");
             });
 
             serviceProvider = services.BuildServiceProvider();
