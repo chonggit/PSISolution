@@ -74,7 +74,7 @@ namespace PSI.Test.Data
                 PhoneNumberConfirmed = true,
                 SecurityStamp = "security",
                 TwoFactorEnabled = true
-            }); ;
+            });
 
             dbSession.SaveChanges();
 

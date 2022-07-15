@@ -21,20 +21,32 @@ namespace PSI.Data
         /// <param name="dbConfig">NHibernate 数据库配置</param>
         public static void AddNHibernate(this IServiceCollection services, Action<Configuration> configurate)
         {
+            services.AddNHibernate((configuration, serviceProvider) =>
+            {
+                configurate(configuration);
+            });
+        }
+
+        /// <summary>
+        /// 注入 NHibernate SessionFactory Session 到 ServiceCollection
+        /// </summary>
+        /// <param name="services">ServiceCollection</param>
+        /// <param name="dbConfig">NHibernate 数据库配置</param>
+        public static void AddNHibernate(this IServiceCollection services, Action<Configuration, IServiceProvider> configurate)
+        {
             services.AddSingleton((servicProvider) =>
             {
-                var config = new Configuration();
+                var configuration = new Configuration();
 
-                configurate(config);
+                configurate(configuration, servicProvider);
 
-                return config;
+                return configuration;
             });
 
             services.AddSingleton((servicProvider) => servicProvider.GetRequiredService<Configuration>().BuildSessionFactory());
             services.AddScoped((servicProvider) => servicProvider.GetRequiredService<ISessionFactory>().OpenSession());
             services.AddScoped<IDbSession, NHDbSession>();
         }
-
 
         /// <summary>
         /// 使用 Sqlite 数据库
