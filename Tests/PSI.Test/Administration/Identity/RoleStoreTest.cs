@@ -59,8 +59,8 @@ namespace PSI.Test.Administration.Identity
             role.NormalizedName = role.Name.ToUpperInvariant();
 
             var result = await roleStore.CreateAsync(role, CancellationToken.None);
-            Assert.IsTrue(result.Succeeded);
 
+            Assert.IsTrue(result.Succeeded);
             Assert.IsFalse(string.IsNullOrEmpty(role.ConcurrencyStamp));
 
             role.Name = "role 1 updated";
@@ -68,9 +68,10 @@ namespace PSI.Test.Administration.Identity
             result = await roleStore.UpdateAsync(role, CancellationToken.None);
             Assert.IsTrue(result.Succeeded);
 
-            role = await roleStore.FindByIdAsync(role.Id.ToString(), CancellationToken.None);
-            Assert.AreEqual(role.Id, role.Id);
-            Assert.AreEqual(role.Name, role.Name);
+           var foundRole = await roleStore.FindByIdAsync(role.Id.ToString(), CancellationToken.None);
+
+            Assert.AreEqual(role.Id, foundRole.Id);
+            Assert.AreEqual(role.Name, foundRole.Name);
 
             var normalizedName = role.NormalizedName;
             role = await roleStore.FindByNameAsync(normalizedName, CancellationToken.None);

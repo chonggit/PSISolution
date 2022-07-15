@@ -44,5 +44,44 @@ namespace PSI.Test.Administration.Identity
 
             Assert.IsNotNull(users);
         }
+
+        [TestMethod]
+        public async Task CanDoCURDAsync()
+        {
+            var user = new User
+            {
+                UserName = "username",
+                AccessFailedCount = 1,
+                Email = "email",
+                EmailConfirmed = true,
+                LockoutEnabled = true,
+                LockoutEnd = DateTime.Now,
+                NormalizedEmail = "EMAIL",
+                NormalizedUserName = "USERNAME",
+                PasswordHash = "hash",
+                PhoneNumber = "number",
+                PhoneNumberConfirmed = true,
+                SecurityStamp = "security",
+                TwoFactorEnabled = true
+            };
+
+            var result = await userStore.CreateAsync(user);
+
+            Assert.IsTrue(result.Succeeded);
+            Assert.IsFalse(string.IsNullOrEmpty(user.ConcurrencyStamp));
+
+            user.UserName = "username1";
+            user.NormalizedUserName = user.UserName.ToUpperInvariant();
+
+            result = await userStore.UpdateAsync(user);
+
+            Assert.IsTrue(result.Succeeded);
+            Assert.IsFalse(string.IsNullOrEmpty(user.ConcurrencyStamp));
+
+            var foundUser = await userStore.FindByIdAsync(user.Id.ToString());
+
+            Assert.AreEqual(user.Id, foundUser.Id);
+            Assert.AreEqual(user.UserName, foundUser.UserName);
+        }
     }
 }
