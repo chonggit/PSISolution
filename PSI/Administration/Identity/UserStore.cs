@@ -355,6 +355,7 @@ namespace PSI.Administration.Identity
             if (login != null)
             {
                 await _session.RemoveAsync(login, cancellationToken);
+                await _session.SaveChangesAsync(cancellationToken);
             }
         }
 
