@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.TestHost;
 using PSI.Administration.Identity;
 using PSI.Data;
+using NHibernate.Cfg;
+using NHibernate.Tool.hbm2ddl;
 
 namespace PSI.API.Test
 {
@@ -15,6 +17,7 @@ namespace PSI.API.Test
         public async Task IntegrationTesting()
         {
             var application = new WebApplicationFactory<Program>();
+            new SchemaExport(application.Services.GetRequiredService<Configuration>()).Create(false, true);
             var httpClient = application.CreateClient();
             var response = await httpClient.PostAsJsonAsync(URI, new Role { Id = 1, Name = "Admins" });
 
