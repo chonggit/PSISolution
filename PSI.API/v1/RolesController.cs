@@ -40,25 +40,37 @@ namespace PSI.API.v1
             return Task.FromResult(_roleManager.Roles.AsEnumerable());
         }
 
-
         /// <summary>
         /// 创建角色
         /// </summary>
         /// <param name="role">将要创建的角色</param>
         /// <returns>返是否创建成功</returns>
         [HttpPost]
-        public async Task<IdentityResult> Post(Role role)
+        public async Task<IActionResult> Post(Role role)
         {
             if (await _roleManager.RoleExistsAsync(role.Name))
             {
-                return IdentityResult.Failed(new IdentityError()
+                return Ok(IdentityResult.Failed(new IdentityError()
                 {
                     Description = $"角色{role.Name}已存在！"
-                });
+                }));
             }
+
             var result = await _roleManager.CreateAsync(role);
-            return result;
+
+            if (result.Succeeded == false)
+            {
+                return Ok(result);
+            }
+
+            return Created(string.Empty, new
+            {
+                result.Errors,
+                result.Succeeded,
+                Role = role,
+            });
         }
+
         /// <summary>
         /// 删除角色
         /// </summary>

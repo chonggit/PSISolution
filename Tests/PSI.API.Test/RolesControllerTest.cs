@@ -1,11 +1,8 @@
 
-using System.Net;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.TestHost;
-using PSI.Administration.Identity;
-using PSI.Data;
 using NHibernate.Cfg;
 using NHibernate.Tool.hbm2ddl;
+using PSI.Administration.Identity;
+using System.Net;
 
 namespace PSI.API.Test
 {
@@ -19,9 +16,10 @@ namespace PSI.API.Test
             var application = new WebApplicationFactory<Program>();
             new SchemaExport(application.Services.GetRequiredService<Configuration>()).Create(false, true);
             var httpClient = application.CreateClient();
-            var response = await httpClient.PostAsJsonAsync(URI, new Role { Id = 1, Name = "Admins" });
+            var response = await httpClient.PostAsJsonAsync(URI, new Role { Name = "Admins" });
 
             Assert.IsTrue(response.IsSuccessStatusCode);
+            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
 
             response = await httpClient.GetAsync($"{URI}/RoleExists/Admins");
 
