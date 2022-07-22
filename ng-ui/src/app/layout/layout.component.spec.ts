@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { LayoutComponent } from './layout.component';
 
-describe('AppComponent', () => {
+describe('LayoutComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
@@ -10,22 +10,9 @@ describe('AppComponent', () => {
     }).compileComponents();
   });
 
-  it('should create the app', () => {
+  it('should create the layout', () => {
     const fixture = TestBed.createComponent(LayoutComponent);
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
-  });
-
-  //it(`should have as title 'ng-ui'`, () => {
-  //  const fixture = TestBed.createComponent(LayoutComponent);
-  //  const app = fixture.componentInstance;
-  //  expect(app.title).toEqual('ng-ui');
-  //});
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(LayoutComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('ng-ui app is running!');
   });
 });
