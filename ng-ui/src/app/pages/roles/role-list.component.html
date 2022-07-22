@@ -1,0 +1,5 @@
+<nz-list nzBordered nzHeader="角色">
+  <nz-list-item *ngFor="let role of roles" (click)="select(role)">
+    {{role.Name}}
+  </nz-list-item>
+</nz-list>
