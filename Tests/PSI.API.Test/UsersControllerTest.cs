@@ -18,6 +18,9 @@ namespace PSI.API.Test
             var application = new WebApplicationFactory<Program>();
             new SchemaExport(application.Services.GetRequiredService<Configuration>()).Create(false, true);
             var httpClient = application.CreateClient();
+            await httpClient.PostAsJsonAsync("v1/roles", new Role { Name = "Role1" });
+            await httpClient.PostAsJsonAsync("v1/roles", new Role { Name = "Role2" });
+            await httpClient.PostAsJsonAsync("v1/roles", new Role { Name = "Role3" });
             var user = new User
             {
                 UserName = "username",
@@ -34,33 +37,69 @@ namespace PSI.API.Test
                 SecurityStamp = "security",
                 TwoFactorEnabled = true
             };
-            //添加
+            // 添加
             var response = await httpClient.PostAsJsonAsync(URI, user);
 
             Assert.IsTrue(response.IsSuccessStatusCode);
             Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
 
             response = await httpClient.GetAsync($"{URI}/1");
-            //查询
+            // 查询
             var foundUser = await response.Content.ReadFromJsonAsync<User>();
 
             Assert.AreEqual(user.UserName, foundUser.UserName);
-            //更新
+            // 更新
             foundUser.UserName = "username1";
             response = await httpClient.PutAsJsonAsync(URI, foundUser);
 
+            Assert.IsTrue(response.IsSuccessStatusCode);
+            Assert.IsTrue(await GetIsSucceeded(response));
+            // 添加到角色
+            response = await httpClient.PostAsJsonAsync($"{URI}/Roles/1", new string[] { "Role1" });
+
+            Assert.IsTrue(response.IsSuccessStatusCode);
+            Assert.IsTrue(await GetIsSucceeded(response));
+
+            // 添加到角色
+            response = await httpClient.PostAsJsonAsync($"{URI}/Roles/1", new string[] { "Role2", "Role3" });
+
+            Assert.IsTrue(response.IsSuccessStatusCode);
+            Assert.IsTrue(await GetIsSucceeded(response));
+            JsonContent.Create(new string[] { "Role1" });
+
+            // 从角色删除
+            response = await httpClient.SendAsync(new HttpRequestMessage
+            {
+                Method = HttpMethod.Delete,
+                RequestUri = new Uri($"{httpClient.BaseAddress.AbsoluteUri}{URI}/roles/1"),
+                Content = JsonContent.Create(new string[] { "Role1" })
+            });
+
+            Assert.IsTrue(response.IsSuccessStatusCode);
+            Assert.IsTrue(await GetIsSucceeded(response));
+
+            // 从角色删除
+            response = await httpClient.SendAsync(new HttpRequestMessage
+            {
+                Method = HttpMethod.Delete,
+                RequestUri = new Uri($"{httpClient.BaseAddress.AbsoluteUri}{URI}/roles/1"),
+                Content = JsonContent.Create(new string[] { "Role2", "Role3" })
+            });
+
+            Assert.IsTrue(response.IsSuccessStatusCode);
+            Assert.IsTrue(await GetIsSucceeded(response));
+
+            response = await httpClient.DeleteAsync($"{URI}/1");
+
+            Assert.IsTrue(response.IsSuccessStatusCode);
+            Assert.IsTrue(await GetIsSucceeded(response));
+        }
+
+        private async Task<bool> GetIsSucceeded(HttpResponseMessage response)
+        {
             var result = await response.Content.ReadFromJsonAsync<JsonDocument>();
             result.RootElement.TryGetProperty("succeeded", out JsonElement value);
-
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.IsTrue(value.GetBoolean());
-            //删除
-            response = await httpClient.DeleteAsync($"{URI}/1");
-            result = await response.Content.ReadFromJsonAsync<JsonDocument>();
-            result.RootElement.TryGetProperty("succeeded", out value);
-
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.IsTrue(value.GetBoolean());
+            return value.GetBoolean();
         }
     }
 }
