@@ -1,13 +1,15 @@
-<form [formGroup]="loginForm" class="login-form ant-form ant-form-horizontal" (submit)="onSubmit()">
-  <div class="ant-row ant-form-item">
-    <div class="ant-form-item-control ant-col">
-      <input type="text" class="ant-input" formControlName="userName" placeholder="用户" />
-    </div>
+  <div class="form-signin">
+    <form [formGroup]="loginForm" (submit)="onSubmit()">
+      <h1 class="h3 mb-3 fw-normal">请登录</h1>
+      <div class="form-floating">
+        <input class="form-control" id="userName" formControlName="userName" placeholder="用户">
+        <label for="userName">用户</label>
+      </div>
+      <div class="form-floating">
+        <input type="password" class="form-control" id="password" formControlName="password" placeholder="密码">
+        <label for="password">密码</label>
+      </div>
+      <button class="w-100 btn btn-lg btn-outline-primary" type="submit">登录</button>
+      <p class="mt-5 mb-3 text-muted">© 2017–2022</p>
+    </form>
   </div>
-  <div class="ant-row ant-form-item">
-    <div class="ant-form-item-control ant-col">
-      <input type="password" class="ant-input" formControlName="password" placeholder="密码" />
-    </div>
-  </div>
-  <button class="ant-btn login-form-button login-form-margin ant-btn-primary">登录</button>
-</form>

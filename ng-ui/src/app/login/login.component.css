@@ -1,21 +1,23 @@
-
-form {
-  margin: auto;
-  padding-top: 20vh;
-}
-
-.login-form {
-  max-width: 300px;
-}
-
-.login-form-margin {
-  margin-bottom: 16px;
-}
-
-.login-form-forgot {
-  float: right;
-}
-
-.login-form-button {
+.form-signin {
   width: 100%;
+  max-width: 330px;
+
+  margin: auto;
+  padding:50px 15px 50px 15px;
 }
+
+  .form-signin .form-floating:focus-within {
+    z-index: 2;
+  }
+
+  .form-signin #userName {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  .form-signin #password {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
