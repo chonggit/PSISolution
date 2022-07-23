@@ -13,12 +13,12 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let user of users">
+        <tr *ngFor="let user of users|async">
           <td>{{user.UserName}}</td>
           <td>{{user.Email}}</td>
-          <td [nzChecked]="user.EmailConfirmed"></td>
+          <td></td>
           <td>{{user.PhoneNumber}}</td>
-          <td [nzChecked]="user.LockoutEnabled"></td>
+          <td></td>
           <td>{{user.LockoutEnd|date:'yyy-dd-MM hh:mm:ss'}}</td>
         </tr>
       </tbody>
