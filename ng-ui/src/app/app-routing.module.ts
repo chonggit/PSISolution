@@ -9,6 +9,7 @@ const routes: Routes = [
     path: '', component: LayoutComponent,
     children: [
       { path: '', loadChildren: () => import('./pages/welcome/welcome.module').then(m => m.WelcomeModule) },
+      { path: 'users', loadChildren: () => import('./pages/users/users.module').then(m => m.UsersModule) }
     ]
   },
 ];

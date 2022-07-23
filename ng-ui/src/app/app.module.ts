@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppComponent } from './app.component';
 import { NZ_I18N } from 'ng-zorro-antd/i18n';
 import { zh_CN } from 'ng-zorro-antd/i18n';
@@ -17,6 +16,8 @@ import { LoginComponent } from './login/login.component';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { LayoutComponent } from './layout/layout.component';
+import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzListModule } from 'ng-zorro-antd/list';
 
 registerLocaleData(zh);
 
@@ -37,7 +38,9 @@ registerLocaleData(zh);
     NzLayoutModule,
     NzMenuModule,
     NzFormModule,
-    NzInputModule
+    NzInputModule,
+    NzTableModule,
+    NzListModule
   ],
   providers: [{ provide: NZ_I18N, useValue: zh_CN }],
   bootstrap: [AppComponent]
