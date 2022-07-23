@@ -32,12 +32,19 @@
             "styles": [
               {
                 "bundleName": "bootstrap",
-                "input": "./node_modules/bootstrap/scss/bootstrap.scss",
-                "inject": true
+                "input": "./node_modules/bootstrap/scss/bootstrap.scss"
               },
-              "src/styles.css"
+              {
+                "bundleName": "styles",
+                "input": "src/styles.css"
+              }
             ],
-            "scripts": []
+            "scripts": [
+              {
+                "bundleName": "bootstrap",
+                "input": "./node_modules/bootstrap/dist/js/bootstrap.bundle.js"
+              }
+            ]
           },
           "configurations": {
             "production": {

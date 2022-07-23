@@ -1,4 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
+@media (min-width: 768px) {
+  .bd-placeholder-img-lg {
+    font-size: 3.5rem;
+  }
+}
+
+html {
+  height: -webkit-fill-available;
+}
+
+body {
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+}
+
+
 input.ng-invalid.ng-touched{
     border:1px solid red;
 }
