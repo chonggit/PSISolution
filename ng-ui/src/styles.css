@@ -14,11 +14,10 @@ body {
   min-height: -webkit-fill-available;
 }
 
-
-input.ng-invalid.ng-touched{
-    border:1px solid red;
+.ng-valid:not(form).ng-touched {
+  border-left: 5px solid #42A948; /* green */
 }
 
-input.ng-valid.ng-touched {
-  border: 1px solid green;
+.ng-invalid:not(form).ng-touched {
+  border-left: 5px solid #a94442; /* red */
 }

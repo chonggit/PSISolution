@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -12,7 +12,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
 
-  loginForm!: UntypedFormGroup;
+  loginForm!: FormGroup<{ userName: FormControl<string | null>, password: FormControl<string | null> }>;
 
   onSubmit(): void {
     if (this.loginForm.valid) {
@@ -28,12 +28,12 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  constructor(private fb: UntypedFormBuilder, private router: Router) { }
+  constructor(private fb: FormBuilder, private router: Router) { }
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
-      userName: [null, [Validators.required, Validators.maxLength(20)]],
-      password: [null, [Validators.required], Validators.maxLength(20)],
+      userName: new FormControl<string | null>(null, [Validators.required, Validators.maxLength(20)]),
+      password: new FormControl<string | null>(null, [Validators.required, Validators.maxLength(20)]),
     });
   }
 }
