@@ -3,6 +3,7 @@ import { empty, Observable, of } from 'rxjs';
 import { RolesService } from './roles.services';
 
 @Component({
+  standalone: true,
   selector: 'app-role-list',
   templateUrl: './role-list.component.html',
   providers: [RolesService]
