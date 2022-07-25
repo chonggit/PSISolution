@@ -1,12 +1,15 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import { empty, Observable, of } from 'rxjs';
 import { RolesService } from './roles.services';
 
 @Component({
   standalone: true,
-  selector: 'app-role-list',
+  selector: 'div[app-role-list]',
   templateUrl: './role-list.component.html',
-  providers: [RolesService]
+  providers: [RolesService],
+  imports: [CommonModule, HttpClientModule]
 })
 export class RoleListComponent implements OnInit {
 

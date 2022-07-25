@@ -1,5 +1,3 @@
-<nz-list nzBordered nzHeader="角色">
-  <nz-list-item class="selected" *ngFor="let role of roles|async" (click)="select(role)">
-    <a href="#" class="ant-anchor-link ant-anchor-link-title"> {{role.Name}}</a>
-  </nz-list-item>
-</nz-list>
+<div class="list-group">
+  <a href="#" class="list-group-item selected" *ngFor="let role of roles|async" (click)="select(role)"> {{role.Name}}</a>
+</div>
