@@ -1,26 +1,28 @@
-<div class="position-sticky pt-3">
-  <ul class="nav flex-column">
-    <li class="mb-1">
-      <button class="btn btn-toggle align-items-center rounded collapsed w-100" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="false">
-        管理
-      </button>
-      <div class="collapse" id="home-collapse">
-        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-          <li><a  routerLink="/users" class="link-dark rounded">用户&角色</a></li>
-        </ul>
-      </div>
-    </li>
-    <li class="border-top my-3"></li>
-    <li class="mb-1">
-      <button class="btn btn-toggle align-items-center rounded collapsed w-100" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
-        用户账号
-      </button>
-      <div class="collapse" id="account-collapse">
-        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-          <li><a href="#" class="link-dark rounded">更改密码</a></li>
-          <li><a href="#" class="link-dark rounded">注销</a></li>
-        </ul>
-      </div>
-    </li>
-  </ul>
-</div>
+<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+  <div class="position-sticky pt-3">
+    <ul class="nav flex-column">
+      <li class="mb-1">
+        <button class="btn btn-toggle align-items-center rounded collapsed w-100" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="false">
+          管理
+        </button>
+        <div class="collapse" id="home-collapse">
+          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+            <li><a  routerLink="/users" class="link-dark rounded">用户&角色</a></li>
+          </ul>
+        </div>
+      </li>
+      <li class="border-top my-3"></li>
+      <li class="mb-1">
+        <button class="btn btn-toggle align-items-center rounded collapsed w-100" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
+          用户账号
+        </button>
+        <div class="collapse" id="account-collapse">
+          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+            <li><a href="#" class="link-dark rounded">更改密码</a></li>
+            <li><a href="#" class="link-dark rounded">注销</a></li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
