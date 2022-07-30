@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 const baseUri = 'v1/roles';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class RolesService {
 
   constructor(private http: HttpClient) { }

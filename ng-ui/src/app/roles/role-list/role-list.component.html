@@ -1,8 +1,12 @@
 <table class="table">
   <thead>
-    <tr><th>角色</th></tr>
+    <tr>
+      <th>角色</th>
+    </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let role of roles|async" (click)="select(role)"><td>{{role.Name}}</td></tr>
+    <tr *ngFor="let role of roles|async" [ngClass]="{selected:selectedRole===role}" (click)="select(role)">
+      <td>{{role.Name}}</td>
+    </tr>
   </tbody>
 </table>
