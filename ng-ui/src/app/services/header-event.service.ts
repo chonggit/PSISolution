@@ -1,12 +1,12 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { HeaderService } from 'app/services/header.service';
-import { filter, Observable, Subject, Subscription } from 'rxjs';
+import { filter, Subscription } from 'rxjs';
 import { HeaderEvent } from './header-event.enum';
 
 @Injectable({
   providedIn: 'any'
 })
-export class NavBarService implements OnDestroy {
+export class HeaderEventService implements OnDestroy {
 
   private add: Subscription | undefined;
 
