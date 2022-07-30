@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HeaderService } from '../../services/header.service';
 
 @Component({
   selector: 'header[app-header]',
@@ -9,9 +10,27 @@ import { CommonModule } from '@angular/common';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  constructor(private headerService: HeaderService) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void { }
+
+  add(): void {
+    this.headerService.add();
   }
 
+  edit(): void {
+    this.headerService.edit();
+  }
+
+  remove(): void {
+    this.headerService.remove();
+  }
+
+  print(): void {
+    this.headerService.print();
+  }
+
+  view(): void {
+    this.headerService.view();
+  }
 }

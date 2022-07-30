@@ -1,18 +1,25 @@
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark sticky-top p-0 shadow">
   <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">XXXX公司</a>
-  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#header_nav" aria-controls="header_nav" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#header_nav"
+    aria-controls="header_nav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="header_nav">
     <div class="navbar-nav">
       <div class="nav-item text-nowrap">
-        <a class="nav-link px-3" href="#">新建</a>
+        <a class="nav-link px-3" href="javascript:void(0)" (click)="add()">新建</a>
       </div>
       <div class="nav-item text-nowrap">
-        <a class="nav-link px-3" href="#">编辑</a>
+        <a class="nav-link px-3" href="javascript:void(0)" (click)="edit()">编辑</a>
       </div>
       <div class="nav-item text-nowrap">
-        <a class="nav-link px-3" href="#">删除</a>
+        <a class="nav-link px-3" href="javascript:void(0)" (click)="remove()">删除</a>
+      </div>
+      <div class="nav-item text-nowrap">
+        <a class="nav-link px-3" href="javascript:void(0)" (click)="print()">打印</a>
+      </div>
+      <div class="nav-item text-nowrap">
+        <a class="nav-link px-3" href="javascript:void(0)" (click)="view()">预览</a>
       </div>
     </div>
     <input class="form-control form-control-dark w-100" type="text" placeholder="查找..." aria-label="查找...">
