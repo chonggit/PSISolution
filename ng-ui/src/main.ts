@@ -16,6 +16,6 @@ bootstrapApplication(AppComponent, {
   providers: [importProvidersFrom([
     HttpClientModule,
     RouterModule.forRoot(routes),
-    HttpClientInMemoryWebApiModule.forRoot(InMemoryService)
+    environment.production ? [] : HttpClientInMemoryWebApiModule.forRoot(InMemoryService)
   ])]
 });
