@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { NavBarService } from './header-event.service';
+import { HeaderEventService } from './header-event.service';
 
 describe('NavBarService', () => {
-  let service: NavBarService;
+  let service: HeaderEventService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(NavBarService);
+    service = TestBed.inject(HeaderEventService);
   });
 
   it('should be created', () => {
