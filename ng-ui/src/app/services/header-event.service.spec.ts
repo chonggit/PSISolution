@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { HeaderEventService } from './header-event.service';
 
-describe('NavBarService', () => {
+describe('HeaderEventService', () => {
   let service: HeaderEventService;
 
   beforeEach(() => {
