@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderService } from '../../services/header.service';
+import { Collapse } from 'bootstrap';
 
 @Component({
   selector: 'header[app-header]',
@@ -10,9 +11,18 @@ import { HeaderService } from '../../services/header.service';
 })
 export class HeaderComponent implements OnInit {
 
+  headerNavCollapse!: Collapse;
+
   constructor(private headerService: HeaderService) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+
+    this.headerNavCollapse = new Collapse('#header_nav', { toggle: false });
+  }
+
+  headerNavCollapseToggle() {
+    this.headerNavCollapse.toggle();
+  }
 
   add(): void {
     this.headerService.add();
