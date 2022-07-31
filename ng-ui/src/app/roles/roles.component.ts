@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RoleListComponent } from './role-list/role-list.component';
 import { HeaderEventService } from 'app/services/header-event.service';
 import { RolesService } from './roles.services';
-import {  RoleEditComponent } from './role-edit/role-edit.component';
+import { RoleEditComponent } from './role-edit/role-edit.component';
 import { RoleAddComponent } from './role-edit/role-add.component';
-
+import { Modal } from 'bootstrap';
+import { ModalDirective } from 'app/directives/modal.directive';
+import { Type } from '@angular/core';
 @Component({
   selector: 'div[app-roles]',
   standalone: true,
@@ -13,16 +15,39 @@ import { RoleAddComponent } from './role-edit/role-add.component';
     CommonModule,
     RoleListComponent,
     RoleEditComponent,
-    RoleAddComponent
+    RoleAddComponent,
+    ModalDirective
   ],
   providers: [RolesService, HeaderEventService],
   templateUrl: './roles.component.html'
 })
 export class RolesComponent implements OnInit {
 
-  constructor(private headerEventService: HeaderEventService,
-    private rolesService: RolesService) { }
+  modal!: Modal;
+
+  @ViewChild(ModalDirective, { static: true }) appModal!: ModalDirective;
+
+  constructor(private headerEventService: HeaderEventService) { }
 
   ngOnInit(): void {
+
+    this.headerEventService.onAdd(() => {
+      this.loadComponent(RoleAddComponent, '[app-role-add]');
+    });
+
+    this.headerEventService.onEdit(() => {
+      this.loadComponent(RoleEditComponent, '[app-role-edit]');
+    })
+  }
+
+  loadComponent(componentType: Type<any>, selector: string) {
+    const viewContainerRef = this.appModal.viewContainerRef;
+    viewContainerRef.clear();
+    viewContainerRef.createComponent(componentType);
+    if (this.modal){
+      this.modal.dispose();
+    }
+    this.modal = new Modal(selector, {});
+    this.modal.show();
   }
 }

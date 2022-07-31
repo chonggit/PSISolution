@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostBinding, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RolesService } from '../roles.services';
@@ -15,6 +15,8 @@ import { RoleEditBaseComponent } from './role-edit-base.component';
 export class RoleAddComponent extends RoleEditBaseComponent implements OnInit {
 
   title = '添加角色';
+
+  @HostBinding('class') className = 'modal fade';
 
   constructor(fb: FormBuilder, private rolesService: RolesService) { super(fb); }
 
