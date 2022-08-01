@@ -8,6 +8,7 @@ import { RoleAddComponent } from './role-edit/role-add.component';
 import { Modal } from 'bootstrap';
 import { ModalDirective } from 'app/directives/modal.directive';
 import { Type } from '@angular/core';
+import { RoleEditBaseComponent } from './role-edit/role-edit-base.component';
 @Component({
   selector: 'div[app-roles]',
   standalone: true,
@@ -23,28 +24,27 @@ import { Type } from '@angular/core';
 })
 export class RolesComponent implements OnInit {
 
-  modal!: Modal;
+  private current_selector!: string;
+  private modal!: Modal;
 
   @ViewChild(ModalDirective, { static: true }) appModal!: ModalDirective;
 
   constructor(private headerEventService: HeaderEventService) { }
 
   ngOnInit(): void {
-
-    this.headerEventService.onAdd(() => {
-      this.loadComponent(RoleAddComponent, '[app-role-add]');
-    });
-
-    this.headerEventService.onEdit(() => {
-      this.loadComponent(RoleEditComponent, '[app-role-edit]');
-    })
+    this.headerEventService.onAdd(() => this.loadComponent(RoleAddComponent, '[app-role-add]'));
+    this.headerEventService.onEdit(() => this.loadComponent(RoleEditComponent, '[app-role-edit]'))
   }
 
-  loadComponent(componentType: Type<any>, selector: string) {
+  private loadComponent(componentType: Type<any>, selector: string) {
+    if (this.current_selector === selector) {
+      this.modal.show();
+      return;
+    }
     const viewContainerRef = this.appModal.viewContainerRef;
     viewContainerRef.clear();
     viewContainerRef.createComponent(componentType);
-    if (this.modal){
+    if (this.modal) {
       this.modal.dispose();
     }
     this.modal = new Modal(selector, {});
